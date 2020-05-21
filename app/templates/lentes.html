@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block lentes_content %}
+    <div class="container">
+        <h1>Lentes</h1>
+        <hr>
+        <div class="row">
+            <div class="col-xl-6">
+                <form class="form-inline my-2 mx-2 my-lg-0" action="/lentes" method="GET" novalidate>
+                    Indice de Refracción 1
+                    <div class="row block my-2">
+                        <label for="rng_n1_lentes"  class="btn btn-primary text-white block">n1</label>
+                        <input class="mx-2" style="width: 50%;" type="range" id="rng_n1_lentes" name="rng_n1_lentes" min="1.0" value={{ n1 }} max="3.0" step="0.01"> 
+                        <input type="number" style="width: 20%;"  class="form-control" id="txt_n1_lentes" value={{n1}}>
+                    </div>
+                    Indice de Refracción 2
+                    <div class="row block my-2">
+                        <label for="rng_n2_lentes"  class="btn btn-primary text-white block">n2</label>
+                        <input class="mx-2" style="width: 50%;" type="range" id="rng_n2_lentes" name="rng_n2_lentes" min="1" value={{ n2 }} max="3" step="0.01"> 
+                        <input type="number" style="width: 20%;"  class="form-control" id="txt_n2_lentes" value={{ n2 }}>
+                    </div>
+                    Radio de Curvatura (cm)
+                    <div class="row block my-2">
+                        <label for="rng_rc_lentes"  class="btn btn-primary text-white block">rc</label>
+                        <input class="mx-2" style="width: 50%;" type="range" id="rng_rc_lentes" name="rng_rc_lentes" min="1" value={{ radio_curvatura }} max="50" step="0.1"> 
+                        <input type="number" style="width: 20%;"  class="form-control" id="txt_rc_lentes" value={{ radio_curvatura }}>
+                    </div>
+                    Distancia al objeto (cm)
+                    <div class="row block my-2">
+                        <label for="rng_do_lentes"  class="btn btn-primary text-white block">do</label>
+                        <input class="mx-2" style="width: 50%;" type="range" id="rng_do_lentes" name="rng_do_lentes" min="1" value={{ distancia_objeto }} max="100" step="0.1"> 
+                        <input type="number" style="width: 20%;"  class="form-control" id="txt_do_lentes" value={{ distancia_objeto }}>
+                    </div>
+                    Altura del objeto (cm)
+                    <div class="row block my-2">
+                        <label for="rng_ao_lentes"  class="btn btn-primary text-white block">ho</label>
+                        <input class="mx-2" style="width: 50%;" type="range" id="rng_ao_lentes" name="rng_ao_lentes" min="1" value={{ altura_objeto }} max="50"> 
+                        <input type="number" style="width: 20%;"  class="form-control" id="txt_ao_lentes" value={{ altura_objeto }}>
+                    </div>
+                    <div class="row block my-2">
+                        <input type="submit" id="btn_submit_lentes"  value="update graph" class="btn btn-outline-primary block">
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-6">
+                <div class="row my-2">
+                    <div class="card" >
+                        <div class="card-header">
+                            <h5 class="card-title">Resultados</h5>
+                        </div>
+                        <img class="animated fast fadeIn my-0" src="/lentes-as-image-{{n1}}-{{n2}}-{{radio_curvatura}}-{{distancia_objeto}}-{{altura_objeto}}.svg"
+                        alt="random points as svg"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,104 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% if title %}
-        <title>{{ title }} - spa</title>
+    <title>{{ title }} - spa</title>
     {% else %}
-        <title> spa</title>
+    <title>spa</title>
     {% endif %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item {% if activar_home %} active {% endif %}" >
-            <a class="nav-link" href="/" type="button" id="">Home</a>
-            </li>
+          <li class="nav-item {% if activar_panel[0] %} active {% endif %}">
+            <a href="/" class="nav-link" href="/" type="button" id=""
+              >Reflexión y Refreacción</a
+            >
+          </li>
+          <li
+            class="nav-item {% if activar_panel[1] %} active {% endif %}"
+          >
+            <a href="/lentes" class="nav-link">Lentes</a>
+		  </li>
+		  <li
+            class="nav-item {% if activar_panel[2] %} active {% endif %}"
+          >
+            <a href="/about" class="nav-link">Acerca de nosotros</a>
+          </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            
-            <input class="form-control mr-sm-2" onkeypress="pulsar(event)" style="width: 50%;" type="search" id="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" id="search_hero"  type="button">Search</button>
+          <input
+            class="form-control mr-sm-2"
+            onkeypress="pulsar(event)"
+            style="width: 50%;"
+            type="search"
+            id="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button
+            class="btn btn-outline-success my-2 my-sm-0"
+            id="search_hero"
+            type="button"
+          >
+            Search
+          </button>
         </form>
-        </div>
+      </div>
     </nav>
-    {% block content %}
-        
-    {% endblock %}
+	{% block content %} {% endblock %} {% block lentes_content %} {% endblock %}
+
+	{% block about %}
+		
+	{% endblock %}
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='js/plotly.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="{{ url_for('static', filename='methods.js') }}"></script>
     <script>
-        
-
-        function pulsar(e) {
-            if (e.keyCode === 13 && !e.shiftKey) {
-                e.preventDefault();
-                $.ajax({
-                    url: "/search_hero",
-                    type: "GET",
-                    contentType: 'application/json;charset=UTF-8',
-                    data: {
-                        'text_busqueda': document.getElementById('search').value,
-                        'data_s': JSON.stringify([1,2,3])
-                    },
-                    dataType: "json",
-                    success: function(data){
-                        console.log(data);
-                        document.getElementById("search").value = ""
-                    }
-                })
-            }
+      function pulsar(e) {
+        if (e.keyCode === 13 && !e.shiftKey) {
+          e.preventDefault();
+          $.ajax({
+            url: "/search_hero",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            data: {
+              text_busqueda: document.getElementById("search").value,
+              data_s: JSON.stringify([1, 2, 3]),
+            },
+            dataType: "json",
+            success: function (data) {
+              console.log(data);
+              document.getElementById("search").value = "";
+            },
+          });
         }
+      }
 
-        $("#rng_n1").on('mousemove', function(){
-            document.getElementById("txt_n1").value = $(this).val();
-        })
-        $("#txt_n1").on('change', function(){
-            document.getElementById("txt_n1").value = $(this).val();
-            document.getElementById("rng_n1").value = $(this).val();
-        })
-        $("#rng_n1").on('change', function(){
-            //document.getElementById("txt_n1").value = $(this).val();
-            document.getElementById("btn_submit").click();
-        })
-        
+      $("#rng_n1").on("mousemove", function () {
+        document.getElementById("txt_n1").value = $(this).val();
+      });
+      $("#txt_n1").on("change", function () {
+        document.getElementById("txt_n1").value = $(this).val();
+        document.getElementById("rng_n1").value = $(this).val();
+      });
+      $("#rng_n1").on("change", function () {
+        //document.getElementById("txt_n1").value = $(this).val();
+        document.getElementById("btn_submit").click();
+      });
 
-        $("#rng_n2").on('mousemove', function(){
-            document.getElementById("txt_n2").value = $(this).val();
-        })
-        $("#rng_n2").on('change', function(){
-            //document.getElementById("txt_n1").value = $(this).val();
-            document.getElementById("btn_submit").click();
-        })
-        $("#txt_n2").on('change', function(){
-            document.getElementById("txt_n2").value = $(this).val();
-            document.getElementById("rng_n2").value = $(this).val();
-        })
-        
+      $("#rng_n2").on("mousemove", function () {
+        document.getElementById("txt_n2").value = $(this).val();
+      });
+      $("#rng_n2").on("change", function () {
+        //document.getElementById("txt_n1").value = $(this).val();
+        document.getElementById("btn_submit").click();
+      });
+      $("#txt_n2").on("change", function () {
+        document.getElementById("txt_n2").value = $(this).val();
+        document.getElementById("rng_n2").value = $(this).val();
+      });
 
-        $("#rng_Ang_i").on('mousemove', function(){
-            document.getElementById("txt_Ang_i").value = $(this).val();
-        })
-        $("#rng_Ang_i").on('change', function(){
-            //document.getElementById("txt_n1").value = $(this).val();
-            document.getElementById("btn_submit").click();
-        })
-        $("#txt_Ang_i").on('change', function(){
-            document.getElementById("txt_Ang_i").value = $(this).val();
-            document.getElementById("rng_Ang_i").value = $(this).val();
-        })
+      $("#rng_Ang_i").on("mousemove", function () {
+        document.getElementById("txt_Ang_i").value = $(this).val();
+      });
+      $("#rng_Ang_i").on("change", function () {
+        //document.getElementById("txt_n1").value = $(this).val();
+        document.getElementById("btn_submit").click();
+      });
+      $("#txt_Ang_i").on("change", function () {
+        document.getElementById("txt_Ang_i").value = $(this).val();
+        document.getElementById("rng_Ang_i").value = $(this).val();
+      });
 
-        
+      //Codigos Para Lentes
+      $("#rng_n1_lentes").on("mousemove", function () {
+        document.getElementById("txt_n1_lentes").value = $(this).val();
+      });
+      $("#rng_n1_lentes").on("change", function () {
+        document.getElementById("btn_submit_lentes").click();
+      });
+      $("#txt_n1_lentes").on("change", function () {
+        document.getElementById("txt_n1_lentes").value = $(this).val();
+        document.getElementById("rng_n1_lentes").value = $(this).val();
+	  });
+	  
+	  $("#rng_n2_lentes").on("mousemove", function () {
+        document.getElementById("txt_n2_lentes").value = $(this).val();
+      });
+      $("#rng_n2_lentes").on("change", function () {
+        document.getElementById("btn_submit_lentes").click();
+      });
+      $("#txt_n2_lentes").on("change", function () {
+        document.getElementById("txt_n2_lentes").value = $(this).val();
+        document.getElementById("rng_n2_lentes").value = $(this).val();
+	  });
+	  
+	  $("#rng_rc_lentes").on("mousemove", function () {
+        document.getElementById("txt_rc_lentes").value = $(this).val();
+      });
+      $("#rng_rc_lentes").on("change", function () {
+        document.getElementById("btn_submit_lentes").click();
+      });
+      $("#txt_rc_lentes").on("change", function () {
+        document.getElementById("txt_rc_lentes").value = $(this).val();
+        document.getElementById("rng_rc_lentes").value = $(this).val();
+	  });
+	  
+	  $("#rng_do_lentes").on("mousemove", function () {
+        document.getElementById("txt_do_lentes").value = $(this).val();
+      });
+      $("#rng_do_lentes").on("change", function () {
+        document.getElementById("btn_submit_lentes").click();
+      });
+      $("#txt_do_lentes").on("change", function () {
+        document.getElementById("txt_do_lentes").value = $(this).val();
+        document.getElementById("rng_do_lentes").value = $(this).val();
+	  });
+	  
+	  $("#rng_ao_lentes").on("mousemove", function () {
+        document.getElementById("txt_ao_lentes").value = $(this).val();
+      });
+      $("#rng_ao_lentes").on("change", function () {
+        document.getElementById("btn_submit_lentes").click();
+      });
+      $("#txt_ao_lentes").on("change", function () {
+        document.getElementById("txt_ao_lentes").value = $(this).val();
+        document.getElementById("rng_ao_lentes").value = $(this).val();
+      });
     </script>
-</body>
+  </body>
 </html>
