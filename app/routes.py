@@ -38,10 +38,10 @@ def lentes():
          False
     ]
     n1 = float(request.args.get("rng_n1_lentes", 1.0))
-    n2 = float(request.args.get("rng_n2_lentes", 2.22))
-    radio_curvatura = float(request.args.get("rng_rc_lentes", 45.0))
-    distancia_objeto = float(request.args.get("rng_do_lentes", 90.0))
-    altura_objeto = float(request.args.get("rng_ao_lentes", 45.0))
+    n2 = float(request.args.get("rng_n2_lentes", 1.5))
+    radio_curvatura = float(request.args.get("rng_rc_lentes", 25.0))
+    distancia_objeto = float(request.args.get("rng_do_lentes", 68.0))
+    altura_objeto = float(request.args.get("rng_ao_lentes", 9.0))
     return render_template('lentes.html', activar_panel = activar_panel, activar_home = False, n1 = n1, n2 = n2, radio_curvatura = radio_curvatura, distancia_objeto = distancia_objeto, altura_objeto = altura_objeto)
 
 @app.route("/lentes-as-image-<float:n1>-<float:n2>-<float:radio_curvatura>-<float:distancia_objeto>-<float:altura_objeto>.svg")
