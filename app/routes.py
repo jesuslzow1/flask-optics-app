@@ -13,6 +13,8 @@ def home():
     activar_panel =[ 
         True,
         False,
+        False,
+        False,
         False]
     
     n1 = float(request.args.get("rng_n1", 1.0))
@@ -35,6 +37,8 @@ def lentes():
     activar_panel = [
          False,
          True,
+         False,
+         False,
          False
     ]
     n1 = float(request.args.get("rng_n1_lentes", 1.0))
@@ -53,15 +57,64 @@ def plot_svg_lentes(n1=1, n2=1, radio_curvatura = 25.0, distancia_objeto = 50.0,
     #x = 
     return Response(svg_figure.drawPlot(n1, n2, radio_curvatura, distancia_objeto, altura_objeto), mimetype="image/svg+xml")
 
-
 @app.route('/about')
 def about():
     activar_panel = [
          False,
          False,
+         False,
+         False,
          True]
     
     return render_template('about.html', activar_home = False, activar_panel = activar_panel)
+
+
+@app.route('/RLC', methods = ['GET', 'POST'])
+def RLC():
+    activar_panel = [
+         False,
+         False,
+         True,
+         False,
+         False]
+    vi = float(request.args.get("rng_vi", 10.0))
+    Ii = float(request.args.get("rng_Ii", -1.0))
+    R = float(request.args.get("rng_R", 100.0))
+    C = float(request.args.get("rng_C",0.002))
+    L= float(request.args.get("rng_L",3.0))
+    return render_template('RLC.html', activar_home = False, activar_panel = activar_panel, vi = vi, Ii = Ii, R = R, C=C,L=L)
+
+@app.route("/matplot-RLC-<float:vi>-<float:Ii>-<float:R>-<float:C>-<float:L>.svg")
+def plot_svg_RLC(vi=10, Ii=-1, R=100,C=0.002,L=3):
+    """ renders the plot on the fly.
+    """
+    svg_figure = SvgCanvasRLC(vi, Ii, R,C,L)
+
+    return Response(svg_figure.drawPlot(), mimetype="image/svg+xml")
+
+
+@app.route('/RLC_par', methods = ['GET', 'POST'])
+def RLC_par():
+    activar_panel = [
+         False,
+         False,
+         False,
+         True,
+         False]
+    vi = float(request.args.get("rng_vi_par", 10.0))
+    Ii = float(request.args.get("rng_Ii_par", -1.0))
+    R = float(request.args.get("rng_R_par", 100.0))
+    C = float(request.args.get("rng_C_par",0.002))
+    L= float(request.args.get("rng_L_par",3.0))
+
+    return render_template('RLC_par.html', activar_home = True, activar_panel = activar_panel, vi = vi, Ii = Ii, R = R, C=C,L=L)
+
+@app.route("/matplot-RLC-par-<float:vi>-<float:Ii>-<float:R>-<float:C>-<float:L>.svg")
+def plot_svg_RLC_par(vi=10, Ii=-1, R=100,C=0.002,L=3):
+    """ renders the plot on the fly.
+    """
+    svg_figure = SvgCanvasRLCPar(vi, Ii, R,C,L)
+    return Response(svg_figure.drawPlot(), mimetype="image/svg+xml")
 
 class SvgCanvas:
     def __init__(self, n1 = 1.0, n2 = 1.52, Ang_i = 60):
@@ -119,8 +172,13 @@ class SvgCanvas:
         self.ax.text(-2.5,2.5,'Medio 1')
         self.ax.text(2.0,-2.5,'Medio 2')
         self.ax.text(0.0,-3.5,'Ángulo de refracción= '+str(self.Ang_refr))
+        
+        #self.figures = Figure()
+        #self.axes = self.figures.add_subplot(1, 1, 1)
+        #self.axes.plot([1,2,3,4], [1,2,3,4])
         output = io.BytesIO()
         FigureCanvasSVG(self.fig).print_svg(output)
+        #FigureCanvasSVG(self.figures).print_svg(output)
         return output.getvalue()
 
 class MplCanvas:
@@ -235,6 +293,102 @@ class MplCanvas:
         self.ax.text(-80,-100,'fi='+str(round(self.fTwo,2))+'cm')
         self.ax.text(20,-100,'Mt='+str(round(self.mag,2)))
         #self.draw()
+        output = io.BytesIO()
+        FigureCanvasSVG(self.fig).print_svg(output)
+        return output.getvalue()
+
+class SvgCanvasRLC:
+    def __init__(self, vi = 10, Ii = -1, R = 100,C=0.002,L=3):
+        self.fig = Figure()
+        self.vi = vi
+        self.Ii=Ii-2
+        self.I_pi = 0
+        self.R = R
+        self.C=C
+        self.L=L
+        self.ax = self.fig.add_subplot(1,1,1)
+        self.drawPlot()
+    def drawPlot(self):
+        #self.ax.clear()
+        h=1e-4
+        self.I_pi=-(self.Ii*self.R+self.vi)/self.L
+        I_pi=self.I_pi
+        Ii=self.Ii
+        R=self.R
+        C=self.C
+        L=self.L
+        corriente=[Ii]
+        ti=0
+        tiempo=[ti]
+        while(ti<3):
+            k1=h*I_pi
+            l1=h*(-((R/L)*I_pi+(1/(L*C))*Ii))
+            k2=h*(I_pi+0.5*l1)
+            l2=h*(-((R/L)*(I_pi+0.5*k1)+(1/(L*C))*(Ii+0.5*l1)))
+            k3=h*(I_pi+0.5*l2)
+            l3=h*(-((R/L)*(I_pi+0.5*k2)+(1/(L*C))*(Ii+0.5*l2)))
+            k4=h*(I_pi+l3)
+            l4=h*(-((R/(L))*(I_pi+k3)+(1/(L*C))*(Ii+0.5*l3)))
+
+            If=Ii+(1/6)*(k1+2*k2+2*k3+k4)
+            I_pf=I_pi+(1/6)*(l1+2*l2+2*l3+l4)
+            tf=ti+h
+            tiempo.append(tf)
+            ti=tf
+            Ii=If
+            corriente.append(Ii)
+            I_pi=I_pf
+        self.ax.plot(tiempo,corriente)
+        self.ax.set_xlabel('Tiempo (s)')
+        self.ax.set_ylabel('Corriente (A)')
+        output = io.BytesIO()
+        FigureCanvasSVG(self.fig).print_svg(output)
+        return output.getvalue()
+
+class SvgCanvasRLCPar:
+    def __init__(self, vi = 10, Ii = -1, R = 100,C=0.002,L=3):
+        self.fig = Figure()
+        self.vi = vi
+        self.Ii=Ii-10
+        self.v_pi = 0
+        self.R = R
+        self.C=C
+        self.L=L
+        self.ax = self.fig.add_subplot(1,1,1)
+        self.drawPlot()
+    def drawPlot(self):
+        #self.ax.clear()
+        vi=self.vi
+        h=1e-4
+        self.v_pi=-(1/self.C)*((vi/self.R)+self.Ii)
+        v_pi=self.v_pi
+        R=self.R
+        C=self.C
+        L=self.L
+        voltaje=[vi]
+        ti=0
+        tiempo=[ti]
+        while(ti<4):
+            k1=h*v_pi
+            l1=h*(-((1/(R*C))*v_pi+(1/(L*C))*vi))
+            k2=h*(v_pi+0.5*l1)
+            l2=h*(-((1/(R*C))*(v_pi+0.5*k1)+(1/(L*C))*(vi+0.5*l1)))
+            k3=h*(v_pi+0.5*l2)
+            l3=h*(-((1/(R*C))*(v_pi+0.5*k2)+(1/(L*C))*(vi+0.5*l2)))
+            k4=h*(v_pi+l3)
+            l4=h*(-((1/(R*C))*(v_pi+k3)+(1/(L*C))*(vi+0.5*l3)))
+
+            vf=vi+(1/6)*(k1+2*k2+2*k3+k4)
+            v_pf=v_pi+(1/6)*(l1+2*l2+2*l3+l4)
+            tf=ti+h
+            tiempo.append(tf)
+            ti=tf
+            vi=vf
+            voltaje.append(vi)
+            v_pi=v_pf
+        self.ax.plot(tiempo,voltaje)
+        self.ax.set_xlabel('Tiempo (s)')
+        self.ax.set_ylabel('Voltaje (v)')
         output = io.BytesIO()
         FigureCanvasSVG(self.fig).print_svg(output)
         return output.getvalue()

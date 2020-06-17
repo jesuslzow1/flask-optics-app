@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Circuito RLC serie </h1>
+    <hr>
+    <div class="row">
+        <div class="col-xl-6">
+            <form class="form-inline my-2 mx-2 my-lg-0" action="/RLC" method="GET" novalidate>
+                <div class="row block my-2">
+                    <label for="rng_vi"  class="btn btn-primary text-white block">v_i (v)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_vi" name="rng_vi" min="1.0" value={{ vi }} max="30" step="0.1"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_vi" value={{vi}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_Ii"  class="btn btn-primary text-white block">I_i(A)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_Ii" name="rng_Ii" min="-2" value={{ Ii }} max="3" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_Ii" value={{Ii}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_R"  class="btn btn-primary text-white block">R(ohms)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_R" name="rng_R" min="0" value={{ R }} max="300"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_R" value={{R}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_C"  class="btn btn-primary text-white block">C(F)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_C" name="rng_C" min="0" value={{ C }} max="3" step="0.001"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_C" value={{C}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_L"  class="btn btn-primary text-white block">L(H)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_L" name="rng_L" min="0" value={{ L }} max="4" step="0.001"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_L" value={{L}}>
+                </div>
+                <input type="submit" id="btn_submit_RLC"  value="update graph" class="btn btn-outline-primary">
+            </form>
+        </div>
+        <div class="col-xl-6">
+            <div class="row my-2">
+                <div class="card" >
+                    <div class="card-header">
+                        <h5 class="card-title">Grafica de corriente</h5>
+                    </div>
+                    <img class="animated fast fadeIn my-0" src="/matplot-RLC-{{vi}}-{{Ii+2}}-{{R}}-{{C}}-{{L}}.svg"
+                        alt="random points as svg"
+                        height="400">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

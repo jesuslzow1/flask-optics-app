@@ -34,18 +34,20 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item {% if activar_panel[0] %} active {% endif %}">
-            <a href="/" class="nav-link" href="/" type="button" id=""
-              >Reflexión y Refreacción</a
-            >
+            <a href="/" class="nav-link" href="/" type="button" id="">
+              Reflexión y Refreacción
+            </a>
           </li>
-          <li
-            class="nav-item {% if activar_panel[1] %} active {% endif %}"
-          >
+          <li class="nav-item {% if activar_panel[1] %} active {% endif %}">
             <a href="/lentes" class="nav-link">Lentes</a>
-		  </li>
-		  <li
-            class="nav-item {% if activar_panel[2] %} active {% endif %}"
-          >
+          </li>
+          <li class="nav-item {% if activar_panel[2] %} active {% endif %}">
+            <a href="/RLC" class="nav-link">RLC Serie</a>
+          </li>
+          <li class="nav-item {% if activar_panel[3] %} active {% endif %}">
+            <a href="/RLC_par" class="nav-link">RLC Paralelo</a>
+          </li>
+          <li class="nav-item {% if activar_panel[4] %} active {% endif %}">
             <a href="/about" class="nav-link">Acerca de nosotros</a>
           </li>
         </ul>
@@ -69,11 +71,8 @@
         </form>
       </div>
     </nav>
-	{% block content %} {% endblock %} {% block lentes_content %} {% endblock %}
-
-	{% block about %}
-		
-	{% endblock %}
+    {% block content %} {% endblock %} {% block lentes_content %} {% endblock %}
+    {% block about %} {% endblock %}
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='js/plotly.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
@@ -146,9 +145,9 @@
       $("#txt_n1_lentes").on("change", function () {
         document.getElementById("txt_n1_lentes").value = $(this).val();
         document.getElementById("rng_n1_lentes").value = $(this).val();
-	  });
-	  
-	  $("#rng_n2_lentes").on("mousemove", function () {
+      });
+
+      $("#rng_n2_lentes").on("mousemove", function () {
         document.getElementById("txt_n2_lentes").value = $(this).val();
       });
       $("#rng_n2_lentes").on("change", function () {
@@ -157,9 +156,9 @@
       $("#txt_n2_lentes").on("change", function () {
         document.getElementById("txt_n2_lentes").value = $(this).val();
         document.getElementById("rng_n2_lentes").value = $(this).val();
-	  });
-	  
-	  $("#rng_rc_lentes").on("mousemove", function () {
+      });
+
+      $("#rng_rc_lentes").on("mousemove", function () {
         document.getElementById("txt_rc_lentes").value = $(this).val();
       });
       $("#rng_rc_lentes").on("change", function () {
@@ -168,9 +167,9 @@
       $("#txt_rc_lentes").on("change", function () {
         document.getElementById("txt_rc_lentes").value = $(this).val();
         document.getElementById("rng_rc_lentes").value = $(this).val();
-	  });
-	  
-	  $("#rng_do_lentes").on("mousemove", function () {
+      });
+
+      $("#rng_do_lentes").on("mousemove", function () {
         document.getElementById("txt_do_lentes").value = $(this).val();
       });
       $("#rng_do_lentes").on("change", function () {
@@ -179,9 +178,9 @@
       $("#txt_do_lentes").on("change", function () {
         document.getElementById("txt_do_lentes").value = $(this).val();
         document.getElementById("rng_do_lentes").value = $(this).val();
-	  });
-	  
-	  $("#rng_ao_lentes").on("mousemove", function () {
+      });
+
+      $("#rng_ao_lentes").on("mousemove", function () {
         document.getElementById("txt_ao_lentes").value = $(this).val();
       });
       $("#rng_ao_lentes").on("change", function () {
@@ -190,6 +189,128 @@
       $("#txt_ao_lentes").on("change", function () {
         document.getElementById("txt_ao_lentes").value = $(this).val();
         document.getElementById("rng_ao_lentes").value = $(this).val();
+      });
+
+      //RLC controles
+      $("#rng_vi").on("mousemove", function () {
+        document.getElementById("txt_vi").value = $(this).val();
+      });
+      $("#txt_vi").on("change", function () {
+        document.getElementById("txt_vi").value = $(this).val();
+        document.getElementById("rng_vi").value = $(this).val();
+      });
+      $("#rng_vi").on("change", function () {
+        document.getElementById("txt_vi").value = $(this).val();
+        document.getElementById("btn_submit_RLC").click();
+      });
+
+      $("#rng_Ii").on("mousemove", function () {
+        document.getElementById("txt_Ii").value = $(this).val();
+      });
+      $("#rng_Ii").on("change", function () {
+        document.getElementById("txt_Ii").value = $(this).val();
+        document.getElementById("btn_submit_RLC").click();
+      });
+      $("#txt_Ii").on("change", function () {
+        document.getElementById("txt_Ii").value = $(this).val();
+        document.getElementById("rng_Ii").value = $(this).val();
+      });
+
+      $("#rng_R").on("mousemove", function () {
+        document.getElementById("txt_R").value = $(this).val();
+      });
+      $("#rng_R").on("change", function () {
+        document.getElementById("txt_R").value = $(this).val();
+        document.getElementById("btn_submit_RLC").click();
+      });
+      $("#txt_R").on("change", function () {
+        document.getElementById("txt_R").value = $(this).val();
+        document.getElementById("rng_R").value = $(this).val();
+      });
+
+      $("#rng_C").on("mousemove", function () {
+        document.getElementById("txt_C").value = $(this).val();
+      });
+      $("#rng_C").on("change", function () {
+        document.getElementById("txt_C").value = $(this).val();
+        document.getElementById("btn_submit_RLC").click();
+      });
+      $("#txt_C").on("change", function () {
+        document.getElementById("txt_C").value = $(this).val();
+        document.getElementById("rng_C").value = $(this).val();
+      });
+
+      $("#rng_L").on("mousemove", function () {
+        document.getElementById("txt_L").value = $(this).val();
+      });
+      $("#rng_L").on("change", function () {
+        document.getElementById("txt_L").value = $(this).val();
+        document.getElementById("btn_submit_RLC").click();
+      });
+      $("#txt_L").on("change", function () {
+        document.getElementById("txt_L").value = $(this).val();
+        document.getElementById("rng_L").value = $(this).val();
+      });
+
+      //RLC Paralelo
+      $("#rng_vi_par").on("mousemove", function () {
+        document.getElementById("txt_vi_par").value = $(this).val();
+      });
+      $("#txt_vi_par").on("change", function () {
+        document.getElementById("txt_vi_par").value = $(this).val();
+        document.getElementById("rng_vi_par").value = $(this).val();
+      });
+      $("#rng_vi_par").on("change", function () {
+        document.getElementById("txt_vi_par").value = $(this).val();
+        document.getElementById("btn_submit_RLC_par").click();
+      });
+
+      $("#rng_Ii_par").on("mousemove", function () {
+        document.getElementById("txt_Ii_par").value = $(this).val();
+      });
+      $("#rng_Ii_par").on("change", function () {
+        document.getElementById("txt_Ii_par").value = $(this).val();
+        document.getElementById("btn_submit_RLC_par").click();
+      });
+      $("#txt_Ii_par").on("change", function () {
+        document.getElementById("txt_Ii_par").value = $(this).val();
+        document.getElementById("rng_Ii_par").value = $(this).val();
+      });
+
+      $("#rng_R_par").on("mousemove", function () {
+        document.getElementById("txt_R_par").value = $(this).val();
+      });
+      $("#rng_R_par").on("change", function () {
+        //document.getElementById("txt_R_par").value = $(this).val();
+        document.getElementById("btn_submit_RLC_par").click();
+      });
+      $("#txt_R_par").on("change", function () {
+        document.getElementById("txt_R_par").value = $(this).val();
+        document.getElementById("rng_R_par").value = $(this).val();
+      });
+
+      $("#rng_C_par").on("mousemove", function () {
+        document.getElementById("txt_C_par").value = $(this).val();
+      });
+      $("#rng_C_par").on("change", function () {
+        //document.getElementById("txt_C").value = $(this).val();
+        document.getElementById("btn_submit_RLC_par").click();
+      });
+      $("#txt_C_par").on("change", function () {
+        document.getElementById("txt_C_par").value = $(this).val();
+        document.getElementById("rng_C_par").value = $(this).val();
+      });
+
+      $("#rng_L_par").on("mousemove", function () {
+        document.getElementById("txt_L_par").value = $(this).val();
+      });
+      $("#rng_L_par").on("change", function () {
+        document.getElementById("txt_L_par").value = $(this).val();
+        document.getElementById("btn_submit_RLC_par").click();
+      });
+      $("#txt_L_par").on("change", function () {
+        document.getElementById("txt_L_par").value = $(this).val();
+        document.getElementById("rng_L_par").value = $(this).val();
       });
     </script>
   </body>
