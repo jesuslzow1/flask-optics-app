@@ -35,21 +35,25 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item {% if activar_panel[0] %} active {% endif %}">
             <a href="/" class="nav-link" href="/" type="button" id="">
-              Reflexión y Refreacción
+              Reflexión y Refracción
             </a>
           </li>
           <li class="nav-item {% if activar_panel[1] %} active {% endif %}">
-            <a href="/lentes" class="nav-link">Lentes</a>
+            <a href="/espejos" class="nav-link">Espejos</a>
           </li>
           <li class="nav-item {% if activar_panel[2] %} active {% endif %}">
-            <a href="/RLC" class="nav-link">RLC Serie</a>
+            <a href="/lentes" class="nav-link">Lentes</a>
           </li>
           <li class="nav-item {% if activar_panel[3] %} active {% endif %}">
-            <a href="/RLC_par" class="nav-link">RLC Paralelo</a>
+            <a href="/RLC" class="nav-link">RLC</a>
           </li>
           <li class="nav-item {% if activar_panel[4] %} active {% endif %}">
+            <a href="/CL" class="nav-link">Caída Libre</a>
+          </li>
+          <li class="nav-item {% if activar_panel[5] %} active {% endif %}">
             <a href="/about" class="nav-link">Acerca de nosotros</a>
           </li>
+
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input
@@ -135,6 +139,45 @@
         document.getElementById("rng_Ang_i").value = $(this).val();
       });
 
+      //Espejos
+      $("select[name=rng_espejo]").change(function(e){
+        //document.getElementById("rng_espejo").value = $(this).val();
+        document.getElementById("btn_submit_espejo").click();
+      });
+      $("#rng_so").on('mousemove', function(){
+        document.getElementById("txt_so").value = $(this).val();
+      });
+      $("#txt_so").on('change', function(){
+        document.getElementById("txt_so").value = $(this).val();
+        document.getElementById("rng_so").value = $(this).val();
+      });
+      $("#rng_so").on('change', function(){
+        //document.getElementById("txt_n1").value = $(this).val();
+        document.getElementById("btn_submit_espejo").click();
+      });
+      $("#rng_ho").on('mousemove', function(){
+        document.getElementById("txt_ho").value = $(this).val();
+      });
+      $("#rng_ho").on('change', function(){
+        //document.getElementById("txt_n1").value = $(this).val();
+        document.getElementById("btn_submit_espejo").click();
+      });
+      $("#txt_ho").on('change', function(){
+        document.getElementById("txt_ho").value = $(this).val();
+        document.getElementById("rng_ho").value = $(this).val();
+      });
+      $("#rng_Ra").on('mousemove', function(){
+        document.getElementById("txt_Ra").value = $(this).val();
+      });
+      $("#rng_Ra").on('change', function(){
+        //document.getElementById("txt_n1").value = $(this).val();
+        document.getElementById("btn_submit_espejo").click();
+      });
+      $("#txt_Ra").on('change', function(){
+        document.getElementById("txt_Ra").value = $(this).val();
+        document.getElementById("rng_Ra").value = $(this).val();
+      });
+
       //Codigos Para Lentes
       $("#rng_n1_lentes").on("mousemove", function () {
         document.getElementById("txt_n1_lentes").value = $(this).val();
@@ -192,6 +235,13 @@
       });
 
       //RLC controles
+      $("select[name=rng_circuito]").change(function(e){
+        //document.getElementById("btn_submit_circuito").click();
+        document.getElementById("btn_submit_RLC").click();
+      });
+      $("#rng_circuito").on('change', function(){
+        document.getElementById("rng_circuito").value = $(this).val();            
+      });
       $("#rng_vi").on("mousemove", function () {
         document.getElementById("txt_vi").value = $(this).val();
       });
@@ -251,66 +301,51 @@
         document.getElementById("txt_L").value = $(this).val();
         document.getElementById("rng_L").value = $(this).val();
       });
-
-      //RLC Paralelo
-      $("#rng_vi_par").on("mousemove", function () {
-        document.getElementById("txt_vi_par").value = $(this).val();
+//caida libre
+      $("#rng_angulo").on("mousemove", function () {
+        document.getElementById("txt_angulo").value = $(this).val();
       });
-      $("#txt_vi_par").on("change", function () {
-        document.getElementById("txt_vi_par").value = $(this).val();
-        document.getElementById("rng_vi_par").value = $(this).val();
+      $("#rng_angulo").on("change", function () {
+        document.getElementById("txt_angulo").value = $(this).val();
+        document.getElementById("btn_submit_CL").click();
       });
-      $("#rng_vi_par").on("change", function () {
-        document.getElementById("txt_vi_par").value = $(this).val();
-        document.getElementById("btn_submit_RLC_par").click();
-      });
-
-      $("#rng_Ii_par").on("mousemove", function () {
-        document.getElementById("txt_Ii_par").value = $(this).val();
-      });
-      $("#rng_Ii_par").on("change", function () {
-        document.getElementById("txt_Ii_par").value = $(this).val();
-        document.getElementById("btn_submit_RLC_par").click();
-      });
-      $("#txt_Ii_par").on("change", function () {
-        document.getElementById("txt_Ii_par").value = $(this).val();
-        document.getElementById("rng_Ii_par").value = $(this).val();
+      $("#txt_angulo").on("change", function () {
+        document.getElementById("txt_angulo").value = $(this).val();
+        document.getElementById("rng_angulo").value = $(this).val();
       });
 
-      $("#rng_R_par").on("mousemove", function () {
-        document.getElementById("txt_R_par").value = $(this).val();
+      $("#rng_vo").on("mousemove", function () {
+        document.getElementById("txt_vo").value = $(this).val();
       });
-      $("#rng_R_par").on("change", function () {
-        //document.getElementById("txt_R_par").value = $(this).val();
-        document.getElementById("btn_submit_RLC_par").click();
+      $("#rng_vo").on("change", function () {
+        document.getElementById("txt_vo").value = $(this).val();
+        document.getElementById("btn_submit_CL").click();
       });
-      $("#txt_R_par").on("change", function () {
-        document.getElementById("txt_R_par").value = $(this).val();
-        document.getElementById("rng_R_par").value = $(this).val();
+      $("#txt_vo").on("change", function () {
+        document.getElementById("txt_vo").value = $(this).val();
+        document.getElementById("rng_vo").value = $(this).val();
       });
-
-      $("#rng_C_par").on("mousemove", function () {
-        document.getElementById("txt_C_par").value = $(this).val();
+      $("#rng_yi").on("mousemove", function () {
+        document.getElementById("txt_yi").value = $(this).val();
       });
-      $("#rng_C_par").on("change", function () {
-        //document.getElementById("txt_C").value = $(this).val();
-        document.getElementById("btn_submit_RLC_par").click();
+      $("#rng_yi").on("change", function () {
+        document.getElementById("txt_yi").value = $(this).val();
+        document.getElementById("btn_submit_CL").click();
       });
-      $("#txt_C_par").on("change", function () {
-        document.getElementById("txt_C_par").value = $(this).val();
-        document.getElementById("rng_C_par").value = $(this).val();
+      $("#txt_yi").on("change", function () {
+        document.getElementById("txt_yi").value = $(this).val();
+        document.getElementById("rng_yi").value = $(this).val();
       });
-
-      $("#rng_L_par").on("mousemove", function () {
-        document.getElementById("txt_L_par").value = $(this).val();
+      $("#rng_masa").on("mousemove", function () {
+        document.getElementById("txt_masa").value = $(this).val();
       });
-      $("#rng_L_par").on("change", function () {
-        document.getElementById("txt_L_par").value = $(this).val();
-        document.getElementById("btn_submit_RLC_par").click();
+      $("#rng_masa").on("change", function () {
+        document.getElementById("txt_masa").value = $(this).val();
+        document.getElementById("btn_submit_CL").click();
       });
-      $("#txt_L_par").on("change", function () {
-        document.getElementById("txt_L_par").value = $(this).val();
-        document.getElementById("rng_L_par").value = $(this).val();
+      $("#txt_masa").on("change", function () {
+        document.getElementById("txt_masa").value = $(this).val();
+        document.getElementById("rng_masa").value = $(this).val();
       });
     </script>
   </body>

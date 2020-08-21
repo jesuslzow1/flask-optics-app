@@ -2,11 +2,28 @@
 
 {% block content %}
 <div class="container">
-    <h1>Circuito RLC serie </h1>
+    <h1>Circuito RLC </h1>
     <hr>
     <div class="row">
         <div class="col-xl-6">
             <form class="form-inline my-2 mx-2 my-lg-0" action="/RLC" method="GET" novalidate>
+                <div class='row block my-2'>
+                    <label> Al seleccionar el circuito en paralelo obtendra la grafica de voltaje
+                          y al seleccionar el circuito en serie se obtiene la grafica de corriente con respecto al tiempo. </label>
+                </div>
+                <div class ='row block my-2'>
+                    <label for="rng_circuito"  class="btn btn-primary text-white block ">Circuito</label>
+                    <select name="rng_circuito" id="rng_circuito" class="bg bg-info text-white block mx-1 custom-select" >
+                        <option {% if circuito_b %}
+                            selected
+                        {% endif %}  value="1">Serie</option> 
+                        <option {% if circuito_b %}
+                            
+                        {% else %}
+                            selected
+                        {% endif %} value="2">Paralelo</option> 
+                    </select>   
+                </div> 
                 <div class="row block my-2">
                     <label for="rng_vi"  class="btn btn-primary text-white block">v_i (v)</label>
                     <input class="mx-2" style="width: 50%;" type="range" id="rng_vi" name="rng_vi" min="1.0" value={{ vi }} max="30" step="0.1"> 
@@ -14,7 +31,7 @@
                 </div>
                 <div class="row block my-2">
                     <label for="rng_Ii"  class="btn btn-primary text-white block">I_i(A)</label>
-                    <input class="mx-2" style="width: 50%;" type="range" id="rng_Ii" name="rng_Ii" min="-2" value={{ Ii }} max="3" step="0.01"> 
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_Ii" name="rng_Ii" min="-10" value={{ Ii }} max="3" step="0.01"> 
                     <input type="number" style="width: 20%;"  class="form-control" id="txt_Ii" value={{Ii}}>
                 </div>
                 <div class="row block my-2">
@@ -38,10 +55,10 @@
         <div class="col-xl-6">
             <div class="row my-2">
                 <div class="card" >
-                    <div class="card-header">
-                        <h5 class="card-title">Grafica de corriente</h5>
+                    <div class="card-header my-0">
+                        <h5 class="card-title">Resultados</h5>
                     </div>
-                    <img class="animated fast fadeIn my-0" src="/matplot-RLC-{{vi}}-{{Ii+2}}-{{R}}-{{C}}-{{L}}.svg"
+                    <img class="animated fast fadeIn my-0" src="/matplot-RLC-{{vi}}-{{Ii+10}}-{{R}}-{{C}}-{{L}}-{{circuito}}.svg"
                         alt="random points as svg"
                         height="400">
                 </div>

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-2">
+    <h1>Espejos </h1>
+    <hr></hr>
+    <div class="row">
+        <div class="col-xl-6">
+            <form class="form-inline my-2 mx-2 my-lg-0" action="/espejos" method="GET" novalidate>
+                <div class='row block my-2'>
+                    <label> Este es un simulador de espejos esféricos. Especifique el tipo de espejo; 
+                        luego ingrese los valores de la distancia del objeto al espejo (so), la altura del objeto (ho),
+                        asi como el radio del espejo. Al oprimir el botón update graph se genera el diagrama de rayos 
+                        y se calculan los valores correspondientes a la imagen reproducida.</label>
+                </div>
+                <div class ='row block my-2'>
+                    <label for="rng_espejo"  class="btn btn-primary text-white block ">espejo</label>
+                    <select name="rng_espejo"  id="rng_espejo " class="bg bg-info text-white block mx-1 custom-select" >
+                        <option {% if espejo_b %}
+                            selected
+                        {% endif %}  value="1">convergente</option> 
+                        <option {% if espejo_b %}
+                            
+                        {% else %}
+                            selected
+                        {% endif %}  value="2">divergente</option> 
+                    </select>   
+                </div>    
+                <div class="row block my-2">
+                    <label for="rng_so"  class="btn btn-primary text-white block">so</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_so" name="rng_so" min="1.0" value={{ so }} max="50" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_so" value={{so}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_ho"  class="btn btn-primary text-white block">ho</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_ho" name="rng_ho" min="1.0" value={{ ho }} max="50" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_ho" value={{ho}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_Ra"  class="btn btn-primary text-white block">Radio</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_Ra" name="rng_Ra" min="1.0" value={{ Ra }} max="60" step=0.01> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_Ra" value={{Ra}}>
+                </div>
+                <input type="submit" id="btn_submit_espejo"  value="update graph" class="btn btn-outline-primary">
+            </form>
+        </div>
+        <div class="col-xl-6">
+            <div class="row my-1">
+                <div class="card" >
+                    <div class="card-header my-0">
+                        <h5 class="card-title">Diagrama de rayos</h5>
+                    </div>
+                    <img class="animated fast fadeIn my-0" src="/matplot-{{so}}-{{ho}}-{{Ra}}-{{espejo}}.svg"
+                    alt="random points as svg"
+                    height="400"
+                    >
+                    <div class="card-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Caída Libre </h1>
+    <hr>
+    <div class="row">
+        <div class="col-xl-6">
+            <form class="form-inline my-2 mx-2 my-lg-0" action="/CL" method="GET" novalidate>
+                <div class='row block my-2'>
+                    <label> Seleccione los valores iniciales para la velocidad vi, la altura inicial del cuerpo, el ángulo de dirección de la velocidad inicial y la masa del cuerpo.
+                        A la derecha se obtiene la gráfica de la trayectoria del objeto hasta llegar al suelo.
+                    </label>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_angulo"  class="btn btn-primary text-white block">Angulo</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_angulo" name="rng_angulo" min="0.0" value={{ angulo }} max="359" step="0.1"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_angulo" value={{angulo}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_vo"  class="btn btn-primary text-white block">v_i(m/s)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_vo" name="rng_vo" min="0.0" value={{ vo }} max="300.0" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_vo" value={{vo}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_yi"  class="btn btn-primary text-white block">Y_i(m)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_yi" name="rng_yi" min="0.0" value={{ yi }} max="500"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_yi" value={{yi}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_masa"  class="btn btn-primary text-white block">masa(kg)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_masa" name="rng_masa" min="1.0" value={{ masa }} max="300.0" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_masa" value={{masa}}>
+                </div>
+                <input type="submit" id="btn_submit_CL"  value="update graph" class="btn btn-outline-primary">
+            </form>
+        </div>
+        <div class="col-xl-6">
+            <div class="row my-2">
+                <div class="card" >
+                    <div class="card-header my-0">
+                        <h5 class="card-title">Gráfica de Posición</h5>
+                    </div>
+                    <img class="animated fast fadeIn my-0" src="/matplotCL-{{angulo}}-{{vo}}-{{yi}}-{{masa}}.svg"
+                        alt="random points as svg"
+                        height="400">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
