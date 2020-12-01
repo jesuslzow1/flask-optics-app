@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% if title %}
-    <title>{{ title }} - spa</title>
+    <title>{{ title }} -Optics</title>
     {% else %}
-    <title>spa</title>
+    <title>Óptica</title>
     {% endif %}
     <link
       rel="stylesheet"
@@ -51,6 +51,9 @@
             <a href="/CL" class="nav-link">Caída Libre</a>
           </li>
           <li class="nav-item {% if activar_panel[5] %} active {% endif %}">
+            <a href="/Difraccion" class="nav-link">Difracción</a>
+          </li>
+          <li class="nav-item {% if activar_panel[6] %} active {% endif %}">
             <a href="/about" class="nav-link">Acerca de nosotros</a>
           </li>
 
@@ -346,6 +349,79 @@
       $("#txt_masa").on("change", function () {
         document.getElementById("txt_masa").value = $(this).val();
         document.getElementById("rng_masa").value = $(this).val();
+      });
+
+      //Difraccion
+      $("#rng_lamda").on("mousemove", function () {
+        document.getElementById("txt_lamda").value = $(this).val();
+      });
+      $("#rng_lamda").on("change", function () {
+        document.getElementById("txt_lamda").value = $(this).val();
+        document.getElementById("btn_submit_Difraccion").click();
+      });
+      $("#txt_lamda").on("change", function () {
+        document.getElementById("txt_lamda").value = $(this).val();
+        document.getElementById("rng_lamda").value = $(this).val();
+      });
+
+      $("#rng_b").on("mousemove", function () {
+        document.getElementById("txt_b").value = $(this).val();
+      });
+      $("#rng_b").on("change", function () {
+        document.getElementById("txt_b").value = $(this).val();
+        document.getElementById("btn_submit_Difraccion").click();
+      });
+      $("#txt_b").on("change", function () {
+        document.getElementById("txt_b").value = $(this).val();
+        document.getElementById("rng_b").value = $(this).val();
+      });
+
+      $("#rng_h").on("mousemove", function () {
+        document.getElementById("txt_h").value = $(this).val();
+      });
+      $("#rng_h").on("change", function () {
+        document.getElementById("txt_h").value = $(this).val();
+        document.getElementById("btn_submit_Difraccion").click();
+      });
+      $("#txt_h").on("change", function () {
+        document.getElementById("txt_h").value = $(this).val();
+        document.getElementById("rng_h").value = $(this).val();
+      });
+
+      $("#rng_f_2").on("mousemove", function () {
+        document.getElementById("txt_f_2").value = $(this).val();
+      });
+      $("#rng_f_2").on("change", function () {
+        document.getElementById("txt_f_2").value = $(this).val();
+        document.getElementById("btn_submit_Difraccion").click();
+      });
+      $("#txt_f_2").on("change", function () {
+        document.getElementById("txt_f_2").value = $(this).val();
+        document.getElementById("rng_f_2").value = $(this).val();
+      });
+
+      $("#rng_a").on("mousemove", function () {
+        document.getElementById("txt_a").value = $(this).val();
+      });
+      $("#rng_a").on("change", function () {
+        document.getElementById("txt_a").value = $(this).val();
+        document.getElementById("btn_submit_Difraccion").click();
+      });
+      $("#txt_a").on("change", function () {
+        document.getElementById("txt_a").value = $(this).val();
+        document.getElementById("rng_a").value = $(this).val();
+      });
+
+      $("#rng_n").on("mousemove", function () {
+        document.getElementById("txt_n").value = $(this).val();
+      });
+      $("#rng_n").on("change", function () {
+        document.getElementById("txt_n").value = $(this).val();
+        document.getElementById("btn_submit_Difraccion").click();
+      });
+      $("#txt_n").on("change", function () {
+        document.getElementById("txt_n").value = $(this).val();
+        document.getElementById("rng_n").value = $(this).val();
       });
     </script>
   </body>

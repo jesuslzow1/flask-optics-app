@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Difracción </h1>
+    <hr>
+    <div class="row">
+        <div class="col-xl-6">
+            <form class="form-inline my-2 mx-2 my-lg-0" action="/Difraccion" method="GET" novalidate>
+                <div class='row block my-2'>
+                    <label> Seleccione los valores iniciales para la longitud de onda lambda, el ancho b de la rendija, la altura h de la rendila,la separación a entre las redijas y el número de rendijas
+                    </label>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_lamda"  class="btn btn-primary text-white block">lambda(nm)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_lamda" name="rng_lamda" min="1" value={{ lamda }} max="1000" step="0.1"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_lamda" value={{lamda}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_b"  class="btn btn-primary text-white block">b(mm)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_b" name="rng_b" min="0.01" value={{ b }} max="30.0" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_b" value={{b}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_h"  class="btn btn-primary text-white block">h(mm)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_h" name="rng_h" min="0.01" value={{ h }} max="50.0" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_h" value={{h}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_f_2"  class="btn btn-primary text-white block">f_2</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_f_2" name="rng_f_2" min="1.0" value={{ f_2 }} max="3" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_f_2" value={{f_2}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_a"  class="btn btn-primary text-white block">a(mm)</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_a" name="rng_a" min="0.01" value={{ a }} max="30.0" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_a" value={{a}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_n"  class="btn btn-primary text-white block">n</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_n" name="rng_n" min="1" value={{ n }} max="30" step="1"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_n" value={{n}}>
+                </div>
+                <input type="submit" id="btn_submit_Difraccion"  value="update graph" class="btn btn-outline-primary">
+            </form>
+        </div>
+        <div class="col-xl-6">
+            <div class="row my-2">
+                <div class="card" >
+                    <div class="card-header my-0">
+                        <h5 class="card-title">Difracción de Fraunhofer</h5>
+                    </div>
+                    <img class="animated fast fadeIn my-0" src="/matplotDifraccion-{{lamda}}-{{b}}-{{h}}-{{f_2}}-{{a}}-{{n}}.svg"
+                        alt="random points as svg"
+                        height="400">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
