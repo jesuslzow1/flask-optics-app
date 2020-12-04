@@ -6,9 +6,12 @@
     <hr>
     <div class="row">
         <div class="col-xl-6">
-            <form class="form-inline my-2 mx-2 my-lg-0" action="/Difraccion" method="GET" novalidate>
+            <form class="form-inline my-5 mx-2 my-lg-0" action="/Difraccion" method="GET" novalidate>
                 <div class='row block my-2'>
-                    <label> Seleccione los valores iniciales para la longitud de onda lambda, el ancho b de la rendija, la altura h de la rendila,la separación a entre las redijas y el número de rendijas
+                    <label> La difracción de Fraunhofer corresponde al caso en el que las dimensiones de los elementos difractantes son como rendijas rectangulares
+                        que son muy pequeñas y las distancias desde la fuente de luz y la pantalla de observación al plano que
+                        contiene el elemento difractante son grandes. Para obtener las gráficas de intensidad para n rendijas rectangulares, seleccione los valores iniciales para la longitud de onda lambda, el ancho b de la rendija, la altura h de la rendila,
+                         la separación a entre las redijas y el número n de rendijas. 
                     </label>
                 </div>
                 <div class="row block my-2">
@@ -43,6 +46,10 @@
                 </div>
                 <input type="submit" id="btn_submit_Difraccion"  value="update graph" class="btn btn-outline-primary">
             </form>
+            <div class='row block my-5'>
+                <label> La siguiente gráfica representa la difracción para una rendija rectangular, tomando los valores de arriba. 
+                </label>
+            </div>
         </div>
         <div class="col-xl-6">
             <div class="row my-2">
@@ -51,6 +58,16 @@
                         <h5 class="card-title">Difracción de Fraunhofer</h5>
                     </div>
                     <img class="animated fast fadeIn my-0" src="/matplotDifraccion-{{lamda}}-{{b}}-{{h}}-{{f_2}}-{{a}}-{{n}}.svg"
+                        alt="random points as svg"
+                        height="400">
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="card" >
+                    <div class="card-header my-0">
+                        <h5 class="card-title">Difracción de Fraunhofer</h5>
+                    </div>
+                    <img class="animated fast fadeIn my-0" src="/matplotDifraccions-{{lamda}}-{{b}}-{{h}}-{{f_2}}-{{a}}-{{n}}.svg"
                         alt="random points as svg"
                         height="400">
                 </div>

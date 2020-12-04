@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% if title %}
-    <title>{{ title }} -Optics</title>
+    <title>{{ title }} -OpticSimulator</title>
     {% else %}
-    <title>Óptica</title>
+    <title>OpticSimulator</title>
     {% endif %}
     <link
       rel="stylesheet"
@@ -35,25 +35,28 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item {% if activar_panel[0] %} active {% endif %}">
             <a href="/" class="nav-link" href="/" type="button" id="">
-              Reflexión y Refracción
+              OpticSimulator
             </a>
           </li>
           <li class="nav-item {% if activar_panel[1] %} active {% endif %}">
-            <a href="/espejos" class="nav-link">Espejos</a>
+            <a href="/Reflexion" class="nav-link">Reflexión</a>
           </li>
           <li class="nav-item {% if activar_panel[2] %} active {% endif %}">
-            <a href="/lentes" class="nav-link">Lentes</a>
+            <a href="/espejos" class="nav-link">Espejos</a>
           </li>
           <li class="nav-item {% if activar_panel[3] %} active {% endif %}">
-            <a href="/RLC" class="nav-link">RLC</a>
+            <a href="/lentes" class="nav-link">Lentes</a>
           </li>
           <li class="nav-item {% if activar_panel[4] %} active {% endif %}">
-            <a href="/CL" class="nav-link">Caída Libre</a>
+            <a href="/RLC" class="nav-link">RLC</a>
           </li>
           <li class="nav-item {% if activar_panel[5] %} active {% endif %}">
-            <a href="/Difraccion" class="nav-link">Difracción</a>
+            <a href="/CL" class="nav-link">Caída Libre</a>
           </li>
           <li class="nav-item {% if activar_panel[6] %} active {% endif %}">
+            <a href="/Difraccion" class="nav-link">Difracción</a>
+          </li>
+          <li class="nav-item {% if activar_panel[7] %} active {% endif %}">
             <a href="/about" class="nav-link">Acerca de nosotros</a>
           </li>
 

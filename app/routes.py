@@ -9,7 +9,7 @@ from numpy import pi , linspace ,meshgrid ,sin
 import matplotlib.cm as cm
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.axes_grid.axislines import SubplotZero
+#from mpl_toolkits.axes_grid.axislines import SubplotZero
 
 
 @app.route('/')
@@ -22,13 +22,28 @@ def home():
         False,
         False,
         False,
+        False,
+        False]
+
+    return render_template('index.html', activar_panel = activar_panel, activar_home = True)
+
+@app.route('/Reflexion', methods = ['GET', 'POST'])
+def Reflexion():
+    activar_panel =[ 
+        False,
+        True,
+        False,
+        False,
+        False,
+        False,
+        False,
         False]
     
     n1 = float(request.args.get("rng_n1", 1.0))
     n2 = float(request.args.get("rng_n2", 1.52))
     Ang_i = float(request.args.get("rng_Ang_i", 60.0))
 
-    return render_template('index.html', activar_panel = activar_panel, activar_home = True, n1 = n1, n2 = n2, Ang_i = Ang_i)
+    return render_template('Reflexion.html', activar_panel = activar_panel, activar_home = False, n1 = n1, n2 = n2, Ang_i = Ang_i)
 
 @app.route("/matplot-as-image-<float:n1>-<float:n2>-<float:Ang_i>.svg")
 def plot_svg(n1=1, n2=1, Ang_i=50):
@@ -38,11 +53,10 @@ def plot_svg(n1=1, n2=1, Ang_i=50):
 
     return Response(svg_figure.drawPlot(), mimetype="image/svg+xml")
 
-x = 10
-
 @app.route('/lentes', methods = ['GET', 'POST'])
 def lentes():
     activar_panel = [
+         False,
          False,
          False,
          True,
@@ -76,6 +90,7 @@ def about():
          False,
          False,
          False,
+         False,
          True]
     
     return render_template('about.html', activar_home = False, activar_panel = activar_panel)
@@ -83,6 +98,7 @@ def about():
 @app.route('/RLC', methods = ['GET', 'POST'])
 def RLC():
     activar_panel = [
+         False,
          False,
          False,
          False,
@@ -113,6 +129,7 @@ def plot_svg_RLC(vi=10, Ii=-1, R=100,C=0.002,L=3, circuito=1):
 @app.route('/espejos', methods = ['GET', 'POST'])
 def espejos():
     activar_panel = [
+        False,
          False,
          True,
          False,
@@ -137,10 +154,10 @@ def plot_svg_Espejo(so=10, ho=1, Ra=100,espejo=1):
     svg_figure = SvgCanvasEspejo(so, ho, Ra,espejo)
     return Response(svg_figure.drawPlot(), mimetype="image/svg+xml")
 
-
 @app.route('/CL', methods = ['GET', 'POST'])
 def CL():
     activar_panel = [
+         False,
          False,
          False,
          False,
@@ -171,6 +188,7 @@ def Difraccion():
          False,
          False,
          False,
+         False,
          True,
          False]
     lamda = float(request.args.get("rng_lamda", 630))
@@ -181,12 +199,21 @@ def Difraccion():
     n=int(request.args.get("rng_n",5))
     
     return render_template('Difraccion.html', activar_home = False, activar_panel = activar_panel,lamda=lamda,b=b,h=h,f_2=f_2,a=a,n=n)
+
 @app.route("/matplotDifraccion-<float:lamda>-<float:b>-<float:h>-<float:f_2>-<float:a>-<int:n>.svg")
 def plot_svg_Difraccion(lamda=500, b=0.1, h=0.2,f_2=1,a=0.002,n=2):
     """ renders the plot on the fly.
     """
     svg_figure = SvgCanvasDifraccion(lamda,b,h,f_2,a,n)
     return Response(svg_figure.drawPlot(), mimetype="image/svg+xml")
+
+@app.route("/matplotDifraccions-<float:lamda>-<float:b>-<float:h>-<float:f_2>-<float:a>-<int:n>.svg")
+def plot_svg_Difraccion1(lamda=500, b=0.1, h=0.2,f_2=1,a=0.002,n=2):
+    """ renders the plot on the fly.
+    """
+    svg_figure = SvgCanvasDifraccion(lamda,b,h,f_2,a,n)
+    return Response(svg_figure.drawPlot1(), mimetype="image/svg+xml")
+
 #***************************CLASES SIMULACIONES************************************************************
 #REFLEXION Y REFRACCION
 class SvgCanvas:
@@ -704,38 +731,63 @@ class SvgCanvasCL:
         output = io.BytesIO()
         FigureCanvasSVG(self.fig).print_svg(output)
         return output.getvalue()
-
+#Difraccion
 class SvgCanvasDifraccion:
     def __init__(self, lamda = 500, b = 0.1, h = 0.2,f_2=1,a=5,n=2):
-        self.fig = Figure()
+        self.fig1 = Figure()
+        self.fig2 = Figure()
         self.lamda = lamda * (1e-9)
         self.n=n
         self.b=b*(10**(-3))
         self.h=h*(10**(-3))
         self.f_2= f_2
         self.a = a*(10**(-3))
-        self.ax = self.fig.add_subplot(1,1,1)
+        self.ax = self.fig1.add_subplot(1,1,1)
+        self.axs= self.fig2.add_subplot(1,1,1)
         self.k=(2.0* pi)/self.lamda
         self.X_Mmax=self.a/2.0
         self.X_Mmin = -self.a/2.0
         self.Y_Mmax = self.X_Mmax 
         self.Y_Mmin = self.X_Mmin
+        self.x= linspace (self.X_Mmin , self.X_Mmax ,1000)
+        self.y=self.x
         self.N =1000
         self.A=0
         self.B=0
+        self.I=0
+        self.i=0
+        self.Bb=(self.k * self.b * self.x)/(2.0* self.f_2)
+        self.Aa=(self.k *self.h * self.y)/(2.0* self.f_2)
+        self.sinc=0
         self.drawPlot()
+        #self.drawPlot1()
     def drawPlot(self):
+        self.axs.clear()
+        self.i= (1/self.n**2)*((sin(self.Bb)/self.Bb)**2)*(sin(self.n*self.Aa)/sin(self.Aa))**2
+        self.sinc=(sin(self.Bb)/self.Bb)**2
+        self.axs.plot(self.x,self.i,'-k',self.x,self.sinc,':b',linewidth=2)
+        #self.ax.plot(x,x)
+        #print(self.sinc)
+        self.axs.set_xlim(self.X_Mmin,self.X_Mmax)
+        self.axs.set_xlabel('X (m)',fontsize=12,fontweight='bold')
+        self.axs.set_ylabel('I(X,Y)/I_0',fontsize=12,fontweight='bold')
+        output = io.BytesIO()
+        FigureCanvasSVG(self.fig2).print_svg(output)
+        return output.getvalue() 
+    def drawPlot1(self):
         self.ax.clear()
         X= linspace (self.X_Mmin , self.X_Mmax ,self.N)
         Y=X
         self.B=(self.k * self.b * X)/(2.0* self.f_2)
         self.A=(self.k *self.h * Y)/(2.0* self.f_2)
-        I= (1/self.n**2)*((sin(self.B)/self.B)**2)*(sin(self.n*self.A)/sin(self.A))**2
-        sinc=(sin(self.B)/self.B)**2
-        self.ax.plot(X,I,'-k',X,sinc,":b",linewidth=2)
+        BB,HH= meshgrid(self.B,self.A)
+        self.I= ((sin(BB)/BB)**2)*(sin(HH)/(HH))**2
+        self.ax.imshow(self.I,cmap='gray', interpolation= 'bilinear',origin='lower',vmin=self.I.min(), vmax= 0.01*self.I.max())
         self.ax.set_xlim(self.X_Mmin,self.X_Mmax)
-        self.ax.set_xlabel(r'$X (m)$',fontsize=12,fontweight='bold')
-        self.ax.set_ylabel(r'$ I(X,Y)/I_0$',fontsize=12,fontweight='bold')
+        self.ax.set_xticks([0, self.N/2, self.N], [-self.X_Mmax, 0, self.X_Mmax])
+        self.ax.set_yticks([0, self.N/2,self.N], [-self.Y_Mmax, 0, self.Y_Mmax])
+        self.ax.set_xlabel('X(mm)')
+        self.ax.set_ylabel('Y(mm)')
         output = io.BytesIO()
-        FigureCanvasSVG(self.fig).print_svg(output)
-        return output.getvalue()
+        FigureCanvasSVG(self.fig1).print_svg(output)
+        return output.getvalue() 

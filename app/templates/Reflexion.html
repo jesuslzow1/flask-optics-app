@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-2 ">
+    <h1>Reflexión y Refracción </h1>
+    <hr>
+    <div class="row">
+        <div class="col-xl-6">
+            <form class="form-inline my-2 mx-2 my-lg-0" action="/Reflexion" method="GET" novalidate>
+                <div class='row block my-2'>
+                    <label> Este es un simulador de rayos bajo Reflexión y Refracción en dos medios n1 y n2
+                        con un ángulo de incidencia Ai. Utilice los deslizadores para cambiar cada uno de los valores y el diagrama de rayos
+                        se genera a la derecha y se muestra el valor del ángulo de refracción.
+                    </label>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_n1"  class="btn btn-primary text-white block">n1</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_n1" name="rng_n1" min="1.0" value={{ n1 }} max="3.0" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_n1" value={{n1}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_n2"  class="btn btn-primary text-white block">n2</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_n2" name="rng_n2" min="1" value={{ n2 }} max="3" step="0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_n2" value={{n2}}>
+                </div>
+                <div class="row block my-2">
+                    <label for="rng_Ang_i"  class="btn btn-primary text-white block">Ai</label>
+                    <input class="mx-2" style="width: 50%;" type="range" id="rng_Ang_i" name="rng_Ang_i" min="0" value={{ Ang_i }} max="180", step= "0.01"> 
+                    <input type="number" style="width: 20%;"  class="form-control" id="txt_Ang_i" value={{Ang_i}}>
+                </div>
+                <input type="submit" id="btn_submit"  value="update graph" class="btn btn-outline-primary">
+            </form>
+        </div>
+        <div class="col-xl-6">
+            <div class="row my-0">
+                <div class="card" >
+                    <div class="card-header">
+                        <h5 class="card-title">Diagrama de Rayos</h5>
+                    </div>
+                    <img class="animated fast fadeIn my-0" src="/matplot-as-image-{{n1}}-{{n2}}-{{Ang_i}}.svg"
+                    alt="random points as svg"
+                    height="400"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
