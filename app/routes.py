@@ -7,6 +7,7 @@ import matplotlib.lines as mlines
 from matplotlib import patches as mpatches
 from numpy import pi , linspace ,meshgrid ,sin
 import matplotlib.cm as cm
+from mpl_toolkits import mplot3d
 import numpy as np
 import matplotlib.pyplot as plt
 #from mpl_toolkits.axes_grid.axislines import SubplotZero
@@ -213,6 +214,13 @@ def plot_svg_Difraccion1(lamda=500, b=0.1, h=0.2,f_2=1,a=0.002,n=2):
     """
     svg_figure = SvgCanvasDifraccion(lamda,b,h,f_2,a,n)
     return Response(svg_figure.drawPlot1(), mimetype="image/svg+xml")
+
+@app.route("/matplotDifracciont-<float:lamda>-<float:b>-<float:h>-<float:f_2>-<float:a>-<int:n>.svg")
+def plot_svg_Difraccion2(lamda=500, b=0.1, h=0.2,f_2=1,a=0.002,n=2):
+    """ renders the plot on the fly.
+    """
+    svg_figure = SvgCanvasDifraccion(lamda,b,h,f_2,a,n)
+    return Response(svg_figure.drawPlot2(), mimetype="image/svg+xml")
 
 #***************************CLASES SIMULACIONES************************************************************
 #REFLEXION Y REFRACCION
@@ -710,7 +718,7 @@ class SvgCanvasCL:
                 ymax=yy[i]
                 cx=xx[i]
                 break
-        tf=xx[-1]/v_x
+        #tf=xx[-1]/v_x
         #tiempo= np.linspace(0,tf,num=len(Vy))
         """
         self.ax.plot(tiempo,Vy,color='green')
@@ -736,6 +744,7 @@ class SvgCanvasDifraccion:
     def __init__(self, lamda = 500, b = 0.1, h = 0.2,f_2=1,a=5,n=2):
         self.fig1 = Figure()
         self.fig2 = Figure()
+        self.fig3 = Figure()
         self.lamda = lamda * (1e-9)
         self.n=n
         self.b=b*(10**(-3))
@@ -744,6 +753,7 @@ class SvgCanvasDifraccion:
         self.a = a*(10**(-3))
         self.ax = self.fig1.add_subplot(1,1,1)
         self.axs= self.fig2.add_subplot(1,1,1)
+        self.axt= self.fig3.add_subplot(1,1,1,projection= '3d')
         self.k=(2.0* pi)/self.lamda
         self.X_Mmax=self.a/2.0
         self.X_Mmin = -self.a/2.0
@@ -760,14 +770,13 @@ class SvgCanvasDifraccion:
         self.Aa=(self.k *self.h * self.y)/(2.0* self.f_2)
         self.sinc=0
         self.drawPlot()
-        #self.drawPlot1()
+        self.drawPlot1()
+        self.drawPlot2()
     def drawPlot(self):
         self.axs.clear()
         self.i= (1/self.n**2)*((sin(self.Bb)/self.Bb)**2)*(sin(self.n*self.Aa)/sin(self.Aa))**2
         self.sinc=(sin(self.Bb)/self.Bb)**2
         self.axs.plot(self.x,self.i,'-k',self.x,self.sinc,':b',linewidth=2)
-        #self.ax.plot(x,x)
-        #print(self.sinc)
         self.axs.set_xlim(self.X_Mmin,self.X_Mmax)
         self.axs.set_xlabel('X (m)',fontsize=12,fontweight='bold')
         self.axs.set_ylabel('I(X,Y)/I_0',fontsize=12,fontweight='bold')
@@ -790,4 +799,17 @@ class SvgCanvasDifraccion:
         self.ax.set_ylabel('Y(mm)')
         output = io.BytesIO()
         FigureCanvasSVG(self.fig1).print_svg(output)
+        return output.getvalue() 
+    def drawPlot2(self):
+        self.axt.clear()
+        X= linspace (self.X_Mmin , self.X_Mmax ,self.N)
+        Y=X
+        self.B=(self.k * self.b * X)/(2.0* self.f_2)
+        self.A=(self.k *self.h * Y)/(2.0* self.f_2)
+        BB,HH= meshgrid(self.B,self.A)
+        self.I= ((sin(BB)/BB)**2)*(sin(HH)/(HH))**2
+        self.axt.plot_surface(BB,HH, self.I,cmap='viridis', edgecolor='none')
+        
+        output = io.BytesIO()
+        FigureCanvasSVG(self.fig3).print_svg(output)
         return output.getvalue() 
