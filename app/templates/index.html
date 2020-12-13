@@ -1,22 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container my-2 ">
-    <h1>OpticSimulator</h1>
-    <hr>
-    <div class="row">
+<div class="container my-5 ">
+    <label>                                                                                                                                                         
+</div>
         </div>
-            <form class="form-inline my-2 mx-2 my-lg-0" action="/" method="GET" novalidate>
-                <div class='row block my-2 text-white'>
-                    <label> En ésta página puede encontrar gráficas y diagramas sobre temas de óptica geométrica (tales como reflexión, refracción, lentes y espejos)
-                         y óptica física (como difracción); asi como otros temas de física y electrónica. 
-                    </label>
-                </div>
-            </form>
+            <img src="{{ url_for('static', filename='img/Logo.svg') }}">
         </div>
-        <body style="background-color:rgba(18, 97, 245, 0.78)">
+        <body background="{{ url_for('static', filename='img/port.png') }}">
         </body>
-       
-    </div>
 </div>
 {% endblock %}

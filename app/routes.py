@@ -809,6 +809,7 @@ class SvgCanvasDifraccion:
         BB,HH= meshgrid(self.B,self.A)
         self.I= ((sin(BB)/BB)**2)*(sin(HH)/(HH))**2
         self.axt.plot_surface(BB,HH, self.I,cmap='viridis', edgecolor='none')
+        self.axt.view_init(10,45)
         
         output = io.BytesIO()
         FigureCanvasSVG(self.fig3).print_svg(output)
