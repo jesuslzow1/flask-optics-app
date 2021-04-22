@@ -2,15 +2,24 @@
 
 {% block content %}
 <div class="container my-2 ">
-    <h1>Reflexión y Refracción </h1>
+    <h2>Reflexión y Refracción </h2>
     <hr>
+
     <div class="row">
-        <div class="col-xl-6">
+        <div class="col-xl-6">   
+         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <label>            
+            <FONT color=blue>Ley de reflexión:</FONT>Cuando un rayo incide sobre un medio, se refleja en el mismo plano incidente y:
+            $$\theta_i = \theta_r$$
+            <FONT color=blue>Ley de refracción:</FONT> Tambien conocida como Ley de Snell, explica la relación entre el rayo incidente y el rayo refractado:
+            $$n_1 \sin \theta_1 = n_2\sin \theta_2$$
+        </label>
             <form class="form-inline my-2 mx-2 my-lg-0" action="/Reflexion" method="GET" novalidate>
                 <div class='row block my-2'>
-                    <label> Este es un simulador de rayos bajo Reflexión y Refracción en dos medios n1 y n2
+                    <label><FONT SIZE=2 color= blue>Este es un simulador de rayos bajo Reflexión y Refracción en dos medios n1 y n2
                         con un ángulo de incidencia Ai. Utilice los deslizadores para cambiar cada uno de los valores y el diagrama de rayos
-                        se genera a la derecha y se muestra el valor del ángulo de refracción.
+                        se genera a la derecha y se muestra el valor del ángulo de refracción.</FONT> 
                     </label>
                 </div>
                 <div class="row block my-2">

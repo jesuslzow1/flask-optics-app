@@ -2,15 +2,24 @@
 
 {% block lentes_content %}
     <div class="container">
-        <h1>Lentes</h1>
+        <h2>Lentes</h2>
         <hr>
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-6">  
+                <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+                <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+                        <label>En una lente delgada la relación de la longitud focal de la lente con
+                             índice de refracción n1, el radio de curvatura y el índice n2 del medio está dada por la formula de frabricante
+                            de lentes :
+                            $$\frac{1}{f} = \frac{n_1-n_2}{n_2} (\frac{1}{R_1}-\frac{1}{R_2})$$
+                            Y el aumento M está dado por:
+                            $$M=\frac{si}{so}=\frac{hi}{ho}$$
+                        </label>              
                 <form class="form-inline my-2 mx-2 my-lg-0" action="/lentes" method="GET" novalidate>
-                    <div class='row block my-2'>
-                        <label> Este es un simulador de Lentes. Utilice los deslizadores para ingresar el valor de índice de refracción en el medio 1 y 2
+                    <div class='row block my-2'>                        
+                        <label> <FONT SIZE=2 COLOR=BLUE> Este es un simulador de Lentes. Utilice los deslizadores para ingresar el valor de índice de refracción en el medio 1 y 2
                             (n1,n2), el radio de curvatura rc, la altura del objeto ho y su distancia a la lente do. a la derecha se genera el diagrama de Rayos
-                            con los valores de altura y distancia de la imagen formada.
+                            con los valores de altura y distancia de la imagen formada.</FONT>
                         </label>
                     </div>
                     <div class="row block my-2">

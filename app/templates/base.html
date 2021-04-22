@@ -50,9 +50,9 @@
           <li class="nav-item {% if activar_panel[4] %} active {% endif %}">
             <a href="/RLC" class="nav-link">RLC</a>
           </li>
-          <li class="nav-item {% if activar_panel[5] %} active {% endif %}">
+          <!--<li class="nav-item {% if activar_panel[5] %} active {% endif %}">
             <a href="/CL" class="nav-link">Caída Libre</a>
-          </li>
+          </li>-->
           <li class="nav-item {% if activar_panel[6] %} active {% endif %}">
             <a href="/Difraccion" class="nav-link">Difracción</a>
           </li>
@@ -308,7 +308,7 @@
         document.getElementById("rng_L").value = $(this).val();
       });
 //caida libre
-      $("#rng_angulo").on("mousemove", function () {
+     /* $("#rng_angulo").on("mousemove", function () {
         document.getElementById("txt_angulo").value = $(this).val();
       });
       $("#rng_angulo").on("change", function () {
@@ -352,7 +352,7 @@
       $("#txt_masa").on("change", function () {
         document.getElementById("txt_masa").value = $(this).val();
         document.getElementById("rng_masa").value = $(this).val();
-      });
+      });*/
 
       //Difraccion
       $("#rng_lamda").on("mousemove", function () {
